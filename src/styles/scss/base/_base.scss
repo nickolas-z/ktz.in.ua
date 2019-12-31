@@ -8,35 +8,46 @@
 
 body {
 	position: relative;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: 'Rubik', Helvetica, Arial, sans-serif;
 	font-size: 1rem;
 	line-height: 140%;
 	color: $color2;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: sans-serif;
-	font-weight: 700;
+	font-family: 'Rubik', sans-serif;
+	font-weight: 500;
 	line-height: 140%;
 }
 
 // Links
 
 a {
-	color: $color4;
+	color: $color3;
 	text-decoration: none;
 	transition: color .3s ease;
-	&:hover, &:focus {
+
+	background-repeat: no-repeat;
+	background-image: linear-gradient(to right, $color3 0%, $color3 100%);
+	background-position: 0 calc(100% - .15em);
+	background-size: 0 20%;
+	transition: background-size 0.25s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s;
+
+	&:hover, &:active {
 		color: $color3;
-		text-decoration: none;
+		background-size: 100% 20%;
 	}
-	&:active {
+	&:focus {
 		color: $color3;
+		background-size: 100% 22%;
 	}
 	&[disabled] {
 		&, &:hover, &:focus, &:active {
-			color: rgba($color4, .8);
+			color: rgba($color3, .8);
 		}
+	}
+	&.static {
+		background: none;
 	}
 }
 
@@ -49,7 +60,7 @@ a {
 input, textarea {
 	background-color: $input--background;
 	border: 0;
-	padding: 15px 25px;
+	padding: 12px 18px;
 	font-size: 1rem;
 	line-height: 22px;
 	color: $input--color;
@@ -69,6 +80,8 @@ input, textarea {
 		background-color: $input--background-disabled;
 	}
 }
+
+@import "select";
 
 // Flex
 
@@ -108,38 +121,36 @@ input, textarea {
 
 .button {
 	display: inline-block;
-	border-radius: 30px;
-	padding: 15px 35px;
+	padding: 12px 35px;
 	font-size: 1rem;
-	font-weight: 500;
-	line-height: 1;
-	text-transform: uppercase;
-	color: $color5;
-	
+	line-height: 22px;
+	border: 0;
+	color: $color2;
+
 	i {
 		margin-left: 7px;
 	}
 }
 
 .button--full {
-	background-color: $color4;
-	color: $color5;
-	transition: background-color .3s ease;
+	background-color: $color3;
+	color: $color2;
+	transition: background-color .3s ease, color .3s ease;
 	&:hover, &:focus {
-		background-color: darken($color4, 10%);
-		color: $color5;
+		background-color: $color0;
+		color: $color1;
 	}
 }
 
 .button--unfull {
 	background-color: transparent;
-	border: 2px solid $color4;
-	color: $color5;
+	border: 2px solid $color3;
+	color: $color3;
 	padding: 13px 18px;
 	white-space: nowrap;
 	transition: background-color .3s ease;
 	&:hover, &:focus {
-		background-color: $color4;
-		color: $color5;
+		background-color: $color3;
+		color: $color3;
 	}
 }

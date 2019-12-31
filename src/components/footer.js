@@ -10,7 +10,7 @@ const Footer = ({ siteTitle }) => (
     <div className="footer--contacts">
       <div className="container">
         <div className="footer--container">
-          <Link to="/"><img src={logo} alt={siteTitle} /></Link>
+          <Link className="static" to="/"><img src={logo} alt={siteTitle} /></Link>
           <a href="tel:+380973295976" className="footer--phone">+380 97 329 5976</a>
         </div>
       </div>

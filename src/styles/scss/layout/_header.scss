@@ -1,3 +1,37 @@
 .header {
 
+	@include position(fixed, 0 0 null 0);
+	background-color: rgba($color0, .4);
+	padding: 16px 0;
+	z-index: 2;
+
+	&--container {
+		@extend %flex;
+	}
+
+	&--nav {
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+
+			@extend %flex;
+			justify-content: flex-end;
+
+			li {
+				+ li {
+					margin-left: 24px;
+				}
+
+				a {
+					color: $color1;
+				}
+			}
+		}
+		.button--full {
+			&:hover, &:focus {
+				background-color: $color4;
+			}
+		}
+	}
 }

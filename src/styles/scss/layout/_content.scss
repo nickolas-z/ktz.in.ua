@@ -5,6 +5,77 @@
 	z-index: 1;
 }
 
+.first-screen {
+	position: relative;
+	background: url(../images/backgrounds/first-screen.jpg) center center no-repeat;
+	background-size: cover;
+	overflow: hidden;
+	height: 100vh;
+
+	@include p_el(before, null, null) {
+		@include position(absolute, 0);
+		background-color: rgba($color0, .5);
+		z-index: 0;
+	}
+
+	.container {
+		@extend %flex;
+		position: relative;
+		z-index: 1;
+		height: 100%;
+	}
+}
+
+.orderform {
+	width: 100%;
+	max-width: 470px;
+	background-color: rgba($color0, .4);
+	padding: 32px;
+
+	&--title {
+		font-size: 2rem;
+		font-weight: 500;
+		line-height: 120%;
+		text-transform: uppercase;
+		color: $color1;
+		margin: 0 0 24px;
+	}
+
+	&--date {
+		margin: 24px 0;
+		@extend %flex;
+
+		&__from, &__to {
+			position: relative;
+			width: 48%;
+			@include p_el(before, 20px, 20px) {
+				@include position(absolute, 0 18px 0 null);
+				margin: auto;
+				pointer-events: none;
+				background: url(../images/icons/calendar.svg) center center no-repeat;
+				background-size: contain;
+				z-index: 1;
+			}
+			input {
+				width: 100%;
+				padding-right: 40px;
+				cursor: pointer;
+				&:focus {
+					box-shadow: 0 0 0 2px $color3;
+				}
+			}
+		}
+	}
+
+	&--button {
+		width: 48%;
+		.button {
+			width: 100%;
+		}
+	}
+
+}
+
 .error {
 
 }

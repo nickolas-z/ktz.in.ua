@@ -22,6 +22,18 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      options: {
+        fonts: [
+          {
+            family: `Rubik`,
+            subsets: [`cyrillic`],
+            variants: [`400`, `500`],
+          },
+        ],
+      },
+    },
+    {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: "YOUR_GOOGLE_ANALYTICS_TRACKING_ID",

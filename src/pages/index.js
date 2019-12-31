@@ -2,16 +2,20 @@ import React from "react"
 
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
+import { registerLocale } from  "react-datepicker";
 import { addDays } from 'date-fns';
+import {uk} from 'date-fns/esm/locale'
 
 import "react-datepicker/dist/react-datepicker.css";
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
+registerLocale('uk', uk);
+
 const options = [
   { value: 'Монтаж кабеля в грунт', label: 'Монтаж кабеля в грунт' },
-  { value: 'Монтаж пластикової труби в грунт (діаметр до 40 мм)', label: 'Монтаж пластикової труби в грунт (діаметр до 40 мм)' },
+  { value: 'Монтаж пластикової труби в грунт', label: 'Монтаж пластикової труби в грунт' },
 ];
 
 class IndexPage extends React.Component {
@@ -19,14 +23,21 @@ class IndexPage extends React.Component {
     super();
 
     this.state = {
-		startDate: new Date(),
+		startFromDate: null,
+		startToDate: null,
 		selectedOption: null,
     }
   }
 
-  handleChange = date => {
+  handleStartDate = date => {
     this.setState({
-      startDate: date
+      startFromDate: date
+    });
+  };
+
+  handleEndDate = date => {
+    this.setState({
+      startToDate: date
     });
   };
 
@@ -50,7 +61,10 @@ class IndexPage extends React.Component {
 	    			<div className="orderform--select">
 						<Select
 							name="service"
+							required={true}
 							placeholder="Оберіть послугу"
+							clearable={false}
+							searchable={false}
 							value={this.state.selectedOption}
 							onChange={this.handleSelectChange}
 							options={options}
@@ -60,25 +74,42 @@ class IndexPage extends React.Component {
 	    				<div className="orderform--date__from">
 							<DatePicker
 								name="date-from"
+								autoComplete="off"
+								required={true}
+								calendarClassName="orderform--calendar"
+								selected={this.state.startFromDate}
+								selectsStart
 								placeholderText="Від (дд.мм.рррр)"
-								selected={this.state.startDate}
-								onChange={this.handleChange}
+								onChange={this.handleStartDate}
+								startDate={this.state.startFromDate}
+								endDate={this.state.startToDate}
 								minDate={new Date()}
+								maxDate={this.state.startToDate?this.state.startToDate:null}
+								dateFormat="dd.MM.yyyy"
+								locale="uk"
 							/>
 
 	    				</div>
 	    				<div className="orderform--date__to">
 							<DatePicker
 								name="date-to"
+								autoComplete="off"
+								required={true}
+								calendarClassName="orderform--calendar"
+								selected={this.state.startToDate}
+								selectsEnd
 								placeholderText="До (дд.мм.рррр)"
-								selected={addDays(this.state.startDate, 1)}
-								onChange={this.handleChange}
-								minDate={addDays(new Date(), 1)}
+								onChange={this.handleEndDate}
+								startDate={this.state.startFromDate}
+								endDate={this.state.startToDate}
+								minDate={this.state.startFromDate?addDays(this.state.startFromDate, 1):addDays(new Date(), 1)}
+								dateFormat="dd.MM.yyyy"
+								locale="uk"
 							/>
 	    				</div>
 	    			</div>
 	    			<div className="orderform--button">
-	    				<input className="button button--fill" type="submit" value="Замовити"/>
+	    				<input className="button button--full" type="submit" value="Замовити"/>
 	    			</div>
 	    		</form>
 	    	</div>
@@ -98,7 +129,7 @@ class IndexPage extends React.Component {
 							<div className="services--content__info">
 								<div className="services--content__info-price">Ціна: <span>1000 грн/м<sup>2</sup></span></div>
 								<div className="services--content__info-callback">
-									<button className="button button--fill">Замовити дзвінок</button>
+									<button className="button button--full">Замовити дзвінок</button>
 								</div>
 							</div>
 						</div>
@@ -121,7 +152,7 @@ class IndexPage extends React.Component {
 							<div className="services--content__info">
 								<div className="services--content__info-price">Ціна: <span>1000 грн/м<sup>2</sup></span></div>
 								<div className="services--content__info-callback">
-									<button className="button button--fill">Замовити дзвінок</button>
+									<button className="button button--full">Замовити дзвінок</button>
 								</div>
 							</div>
 						</div>
