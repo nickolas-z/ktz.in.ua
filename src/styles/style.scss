@@ -1,0 +1,16 @@
+@charset 'UTF-8';
+
+@import
+  'scss/components/normalize',
+  'scss/components/mixins',
+  'scss/components/variable';
+
+// 2. Base stuff
+@import
+  'scss/base/base';
+
+// 3. Layout
+@import
+  'scss/layout/header',
+  'scss/layout/footer',
+  'scss/layout/content';
