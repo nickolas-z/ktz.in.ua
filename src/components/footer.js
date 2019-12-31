@@ -6,7 +6,7 @@ import { Link } from "gatsby"
 import logo from "../images/logo.svg"
 
 const Footer = ({ siteTitle }) => (
-  <footer classname="footer">
+  <footer className="footer">
     <div className="footer--contacts">
       <div className="container">
         <div className="footer--container">
