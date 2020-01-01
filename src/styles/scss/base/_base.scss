@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, h6 {
 // Links
 
 a {
-	color: $color3;
+	color: $color1;
 	text-decoration: none;
 	transition: color .3s ease;
 
@@ -34,19 +34,20 @@ a {
 	transition: background-size 0.25s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s;
 
 	&:hover, &:active {
-		color: $color3;
+		color: $color1;
 		background-size: 100% 20%;
 	}
 	&:focus {
-		color: $color3;
+		color: $color1;
 		background-size: 100% 22%;
 	}
 	&[disabled] {
 		&, &:hover, &:focus, &:active {
-			color: rgba($color3, .8);
+			color: rgba($color1, .8);
 		}
 	}
 	&.static {
+		cursor: pointer;
 		background: none;
 	}
 }

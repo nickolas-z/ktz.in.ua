@@ -1,15 +1,58 @@
 .header {
 
 	@include position(fixed, 0 0 null 0);
-	background-color: rgba($color0, .4);
+	background-color: rgba($color0, .7);
 	padding: 16px 0;
 	z-index: 2;
+
+	@media(max-width: 767px) {
+		background-color: $color0;
+	}
 
 	&--container {
 		@extend %flex;
 	}
 
 	&--nav {
+
+		&__toggle {
+			display: none;
+			position: relative;
+			@include size(40px, 25px);
+			cursor: pointer;
+
+			span {
+				display: block;
+				width: 33px;
+				height: 4px;
+				margin: 0 auto 5px;
+				position: relative;
+
+				background: $color1;
+				border-radius: 3px;
+
+				z-index: 1;
+
+				transform-origin: 4px 0px;
+
+				transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+				          background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+				          opacity 0.55s ease;
+
+				&:first-child {
+					transform-origin: 0% 0%;
+				}
+
+				&:nth-last-child(1) {
+					transform-origin: 0% 100%;
+				}
+			}
+
+			@media(max-width: 767px) {
+				display: inline-block;
+			}
+		}
+
 		ul {
 			list-style: none;
 			padding: 0;
@@ -18,20 +61,79 @@
 			@extend %flex;
 			justify-content: flex-end;
 
+			@media(max-width: 767px) {
+				display: block;
+				@include position(absolute, 100% null null 0);
+				width: 100%;
+				padding: 0 16px 16px;
+				background-color: rgba($color0, .8);
+				transform: translateX(100%);
+				-webkit-font-smoothing: antialiased;
+				transform-origin: 0% 0%;
+				transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+
+			}
+
 			li {
+				@media(max-width: 767px) {
+					border-top: 1px solid rgba($color1, .1);
+					&:nth-last-child {
+						padding-top: 16px;
+					}
+				}
 				+ li {
 					margin-left: 24px;
+					@media(max-width: 767px) {
+						margin: 0;
+					}
 				}
 
 				a {
 					color: $color1;
+					cursor: pointer;
+					@media(max-width: 767px) {
+						display: block;
+						width: 100%;
+						padding: 16px 0;
+					}
 				}
 			}
 		}
 		.button--full {
+			@media(max-width: 767px) {
+				width: 100%;
+			}
 			&:hover, &:focus {
 				background-color: $color4;
 			}
+		}
+	}
+}
+
+#header--nav__toggle {
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	opacity: 0;
+	@include size(0);
+
+	&:checked  {
+		+ label {
+			span {
+				opacity: 1;
+				transform: rotate(45deg) translate(-2px,-1px);
+				&:nth-last-child(2) {
+					opacity: 0;
+					transform: rotate(0deg) scale(0.2, 0.2);
+				}
+				&:nth-last-child(1) {
+					transform: rotate(-45deg) translate(-2px,1px);
+				}
+			}
+		}
+		~ ul {
+			transform: translateX(0);
 		}
 	}
 }

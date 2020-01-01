@@ -6,6 +6,7 @@ module.exports = {
   siteMetadata: {
     title: `KTZ Company`,
     description: ``,
+    siteUrl: `https://www.ktz.in.ua`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -44,6 +45,18 @@ module.exports = {
       options: {
         name: `images`,
         path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `ktz.in.ua`,
+        short_name: `ktz`,
+        start_url: `/`,
+        background_color: `#000000`,
+        theme_color: `#000000`,
+        display: `minimal-ui`,
+        icon: `src/images/ktz-icon.png`,
       },
     },
   ],

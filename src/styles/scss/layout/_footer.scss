@@ -1,5 +1,41 @@
 // Footer
 
 .footer {
+	&--contacts {
+		padding: 30px 0;
+		background: url(../images/footer-pattern_dashed.png), $color0;
+		color: $color1;
+	}
+	&--container {
+		@extend %flex;
 
+		@media(max-width: 600px) {
+			flex-direction: column;
+			justify-content: center;
+		}
+	}
+	&--phone {
+		position: relative;
+		font-size: 1.5rem;
+		font-weight: 500;
+
+		@include p_el(after, 14px, 22px) {
+			@include position(absolute, 0 null 0 -25px);
+			background: url(../images/icons/phone.svg) center center no-repeat;
+			background-size: 14px 22px;
+		}
+
+		@media(max-width: 600px) {
+			font-size: 1rem;
+			margin-top: 15px;
+			margin-left: 25px;
+		}
+	}
+	&--copyright {
+		background-color: $color0;
+		line-height: 1;
+		color: rgba($color1, .5);
+		text-align: center;
+		padding: 16px 0;
+	}
 }
