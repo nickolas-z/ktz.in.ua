@@ -73,20 +73,29 @@ class IndexPage extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-	var messageText = "<b>Нове замовлення</b> \n ", elements = e.target.elements;
+	var messageText = "<b>Нове замовлення</b> \n", elements = e.target.elements;
 
 	if(this.state.name && this.state.phone && this.state.selectedOption && this.state.startToDate && this.state.startFromDate) {
-		messageText += '<b>Ім\'я:</b> ' + this.state.name + ' \n ';
-		messageText += '<b>Телефон:</b> ' + this.state.phone + ' \n ';
-		messageText += '<b>Послуга:</b> ' + elements.service.value + ' \n ';
-		messageText += '<b>Від:</b> ' + elements.date_from.value + ' \n ';
+		messageText += '<b>Ім\'я:</b> ' + this.state.name + ' \n';
+		messageText += '<b>Телефон:</b> ' + this.state.phone + ' \n';
+		messageText += '<b>Послуга:</b> ' + elements.service.value + ' \n';
+		messageText += '<b>Від:</b> ' + elements.date_from.value + ' \n';
 		messageText += '<b>До:</b> ' + elements.date_to.value
 
 		client.sendMessage('-349106194', messageText, {
 			parse_mode: 'HTML',
 			disable_web_page_preview: true,
-			disable_notification: true,
 		});
+
+		alert('Дякуємо, що залишили заявку! Скоро наш менеджер зв\'яжеться з Вами.');
+
+		this.setState({
+	    	name: '',
+	    	phone: '',
+			startFromDate: null,
+			startToDate: null,
+			selectedOption: null,
+		})
 	} else {
 		alert('Заповніть, будь ласка, усі поля!');
 	}
