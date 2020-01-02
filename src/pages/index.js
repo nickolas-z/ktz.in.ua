@@ -25,7 +25,7 @@ const options = [
   { value: 'Монтаж пластикової труби в грунт', label: 'Монтаж пластикової труби в грунт' },
 ];
 
-const client = TelegramClient.connect('805786025:AAEiG8lF4TTTfwswDJu5kIkhXTo7wBpxPog');
+const client = TelegramClient.connect(process.env.API_KEY);
 
 class IndexPage extends React.Component {
   constructor(props) {
