@@ -24,8 +24,8 @@ import SEO from "../components/seo"
 registerLocale('uk', uk);
 
 const options = [
-  { value: 'Монтаж кабеля в грунт', label: 'Монтаж кабеля в грунт' },
-  { value: 'Монтаж пластикової труби в грунт', label: 'Монтаж пластикової труби в грунт' },
+  { value: 'Монтаж кабеля в ґрунт', label: 'Монтаж кабеля в ґрунт' },
+  { value: 'Монтаж пластикової труби в ґрунт', label: 'Монтаж пластикової труби в ґрунт' },
 ];
 
 const client = TelegramClient.connect(process.env.API_KEY);
@@ -209,7 +209,7 @@ class IndexPage extends React.Component {
 
 		return (
 		  <Layout>
-			<SEO title="KTZ Company" />
+			<SEO title="KTZ Company | Безтраншейна прокладка кабеля в ґрунт та монтаж труб кабелеукладачем" description="До кожного нового об'єкта ми підходимо індивідуально, що дозволяє нам виконати роботи по безтраншейній прокладці кабеля в ґрунт у встановлені терміни та з високою надійністю." />
 
 			<header className="header">
 				<div className="container">
@@ -308,10 +308,10 @@ class IndexPage extends React.Component {
 							<div className="services--1-left">
 								<div className="services--content">
 									<div className="services--content__category">Послуги</div>
-									<h2 className="services--content__title">Монтаж кабеля в грунт</h2>
+									<h2 className="services--content__title">Монтаж кабеля в ґрунт</h2>
 									<div className="services--content__text">Lorem Ipsum - це текст-"риба", що використовується в друкарстві та дизайні. Lorem Ipsum є, фактично, стандартною "рибою" аж з XVI сторіччя, коли невідомий друкар взяв шрифтову гранку та склав на ній підбірку зразків шрифтів. "Риба" не тільки успішно пережила п'ять століть, але й прижилася в електронному верстуванні, залишаючись по суті незмінною. Вона популяризувалась в 60-их роках минулого сторіччя завдяки виданню зразків шрифтів Letraset, які містили уривки з Lorem Ipsum, і вдруге - нещодавно завдяки програмам комп'ютерного верстування на кшталт Aldus Pagemaker, які використовували різні версії Lorem Ipsum.</div>
 									<div className="services--content__info">
-										<div className="services--content__info-price">Ціна: <span>1000 грн/м<sup>2</sup></span></div>
+										<div className="services--content__info-price">Ціна: <span>Договірна</span></div>
 										<div className="services--content__info-callback">
 											<button className="button button--full" onClick={() => {this.openPhoneCallback()}}>Замовити дзвінок</button>
 										</div>
@@ -331,10 +331,10 @@ class IndexPage extends React.Component {
 							<div className="services--2-right">
 								<div className="services--content">
 									<div className="services--content__category">Послуги</div>
-									<h2 className="services--content__title">Монтаж пластикової труби в грунт <span>(діаметр до 40 мм)</span></h2>
+									<h2 className="services--content__title">Монтаж пластикової труби в ґрунт <span>(діаметр до 40 мм)</span></h2>
 									<div className="services--content__text">Lorem Ipsum - це текст-"риба", що використовується в друкарстві та дизайні. Lorem Ipsum є, фактично, стандартною "рибою" аж з XVI сторіччя, коли невідомий друкар взяв шрифтову гранку та склав на ній підбірку зразків шрифтів. "Риба" не тільки успішно пережила п'ять століть, але й прижилася в електронному верстуванні, залишаючись по суті незмінною. Вона популяризувалась в 60-их роках минулого сторіччя завдяки виданню зразків шрифтів Letraset, які містили уривки з Lorem Ipsum, і вдруге - нещодавно завдяки програмам комп'ютерного верстування на кшталт Aldus Pagemaker, які використовували різні версії Lorem Ipsum.</div>
 									<div className="services--content__info">
-										<div className="services--content__info-price">Ціна: <span>1000 грн/м<sup>2</sup></span></div>
+										<div className="services--content__info-price">Ціна: <span>Договірна</span></div>
 										<div className="services--content__info-callback">
 											<button className="button button--full" onClick={() => {this.openPhoneCallback()}}>Замовити дзвінок</button>
 										</div>
@@ -353,7 +353,12 @@ class IndexPage extends React.Component {
 								<div className="aboutus--img"></div>
 							</div>
 							<div className="aboutus--right">
-								<div className="aboutus--text">Lorem Ipsum - це текст-"риба", що використовується в друкарстві та дизайні. Lorem Ipsum є, фактично, стандартною "рибою" аж з XVI сторіччя, коли невідомий друкар взяв шрифтову гранку та склав на ній підбірку зразків шрифтів. "Риба" не тільки успішно пережила п'ять століть, але й прижилася в електронному верстуванні, залишаючись по суті незмінною. Вона популяризувалась в 60-их роках минулого сторіччя завдяки виданню зразків шрифтів Letraset, які містили уривки з Lorem Ipsum, і вдруге - нещодавно завдяки програмам комп'ютерного верстування на кшталт Aldus Pagemaker, які використовували різні версії Lorem Ipsum.</div>
+								<div className="aboutus--text">
+									<p>KTZ заснована в 2018 р. у м. Рівне і виконує роботи по безтраншейному монтажу кабеля та труб діаметром до 40 мм в ґрунт. На сьогодні нашою компанією було прокладено понад 400 км кабелю. Ми працювали у важких геологічних умовах, у безводних ґрунтах, у міській смузі. Виконували  проколи різного типу складності під трасами.</p>
+									<p>До кожного нового об'єкта ми підходимо індивідуально, що дозволяє нам виконати роботи по безтраншейній прокладці кабеля в ґрунт у встановлені терміни та з високою надійністю.</p>
+									<p>Завдяки наявності власної техніки та навчених працівників KTZ, виконуємо роботу професійно і якісно.</p>
+									<p>Роботи виконуємо по всій території України.</p>
+								</div>
 								<div className="aboutus--signature">Колектив KTZ Company</div>
 							</div>
 						</div>

@@ -96,6 +96,9 @@
 					box-shadow: 0 0 0 2px $color3;
 				}
 			}
+			.react-datepicker {
+				font-family: 'Rubik', Helvetica, Arial, sans-serif;
+			}
 		}
 		&__to {
 			@media(max-width: 600px) {
@@ -370,6 +373,13 @@
 
 		@media(max-width: 600px) {
 			padding: 16px;
+		}
+
+		p {
+			margin: 0;
+			+ p {
+				margin: 8px 0 0;
+			}
 		}
 	}
 	&--signature {
