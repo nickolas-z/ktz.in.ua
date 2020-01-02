@@ -38,7 +38,7 @@
   "license": "MIT",
   "scripts": {
     "init:gh-pages": "git clone --single-branch --branch gh-pages https://github.com/nickolas-z/ktz.in.ua.git public",
-    "clean:gh-pages": "rm -rf .cache && cd public && find . ! ( -name 'CNAME' -o -name 'README.md' ) -type f -exec rm -f {} + ",
+    "clean:gh-pages": "rm -rf .cache && cd public && find . ! ( -name 'CNAME' -o -name '.git' ) -type f -exec rm -r {} + ",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "deploy": "cd public && git add --all && git commit -m \"Release\" && git push origin gh-pages",
