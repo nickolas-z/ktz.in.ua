@@ -73,7 +73,7 @@ class IndexPage extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-	var messageText = "<b>Нове замовлення</b> \n", elements = e.target.elements;
+	var messageText = "<b>Нове замовлення</b> \n------------------------------\n", elements = e.target.elements;
 
 	if(this.state.name && this.state.phone && this.state.selectedOption && this.state.startToDate && this.state.startFromDate) {
 		messageText += '<b>Ім\'я:</b> ' + this.state.name + ' \n';
@@ -82,7 +82,7 @@ class IndexPage extends React.Component {
 		messageText += '<b>Від:</b> ' + elements.date_from.value + ' \n';
 		messageText += '<b>До:</b> ' + elements.date_to.value
 
-		client.sendMessage('-349106194', messageText, {
+		client.sendMessage(process.env.GROUP_ID, messageText, {
 			parse_mode: 'HTML',
 			disable_web_page_preview: true,
 		});
