@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import ReactNotifications from 'react-notifications-component';
 import { StaticQuery, graphql } from "gatsby"
 
 import "../styles/style.scss"
@@ -17,6 +18,7 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <>
+        <ReactNotifications />
         {children}
       </>
     )}
