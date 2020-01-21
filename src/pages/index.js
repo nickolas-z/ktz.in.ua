@@ -234,68 +234,74 @@ class IndexPage extends React.Component {
 			<main>
 				<div id="first" className="first-screen">
 					<div className="container">
-						<form className="orderform" onSubmit={this.handleSubmit}>
-							<h3 className="orderform--title">Замовити онлайн</h3>
-							<div className="orderform--name">
-								<input type="text" name="name" placeholder="Введіть ваше ім'я" onChange={this.handleName} value={this.state.name} required />
-							</div>
-							<div className="orderform--phone">
-								<input type="tel" name="phone" pattern="^[0-9-+\s()]*$" placeholder="Введіть ваш телефон" onChange={this.handlePhone} value={this.state.phone} required />
-							</div>
-							<div className="orderform--select">
-								<Select
-									name="service"
-									required={true}
-									placeholder="Оберіть послугу"
-									clearable={false}
-									searchable={false}
-									value={this.state.selectedOption}
-									onChange={this.handleSelectChange}
-									options={options}
-								/>
-							</div>
-							<div className="orderform--date">
-								<div className="orderform--date__from">
-									<DatePicker
-										name="date_from"
-										autoComplete="off"
+						<div className="col-sm-6">
+							<h1>Безтраншейна прокладка кабеля в ґрунт та монтаж пластикових труб кабелеукладачем Ditch&nbsp;Witch RT90. <span>Швидко! Якісно! Надійно!</span></h1>
+						</div>
+						<div className="col-sm-6">
+							<form className="orderform" onSubmit={this.handleSubmit}>
+								<h3 className="orderform--title">Замовити онлайн</h3>
+								<div className="orderform--name">
+									<input type="text" name="name" placeholder="Введіть ваше ім'я" onChange={this.handleName} value={this.state.name} required />
+								</div>
+								<div className="orderform--phone">
+									<input type="tel" name="phone" pattern="^[0-9-+\s()]*$" placeholder="Введіть ваш телефон" onChange={this.handlePhone} value={this.state.phone} required />
+								</div>
+								<div className="orderform--select">
+									<Select
+										name="service"
 										required={true}
-										calendarClassName="orderform--calendar"
-										selected={this.state.startFromDate}
-										selectsStart
-										placeholderText="Від (дд.мм.рррр)"
-										onChange={this.handleStartDate}
-										startDate={this.state.startFromDate}
-										endDate={this.state.startToDate}
-										minDate={new Date()}
-										maxDate={this.state.startToDate?this.state.startToDate:null}
-										dateFormat="dd.MM.yyyy"
-										locale="uk"
+										placeholder="Оберіть послугу"
+										clearable={false}
+										searchable={false}
+										value={this.state.selectedOption}
+										onChange={this.handleSelectChange}
+										options={options}
 									/>
+								</div>
+								<div className="orderform--date">
+									<div className="orderform--date__from">
+										<DatePicker
+											name="date_from"
+											autoComplete="off"
+											required={true}
+											calendarClassName="orderform--calendar"
+											selected={this.state.startFromDate}
+											selectsStart
+											placeholderText="Від (дд.мм.рррр)"
+											onChange={this.handleStartDate}
+											startDate={this.state.startFromDate}
+											endDate={this.state.startToDate}
+											minDate={new Date()}
+											maxDate={this.state.startToDate?this.state.startToDate:null}
+											dateFormat="dd.MM.yyyy"
+											locale="uk"
+										/>
 
+									</div>
+									<div className="orderform--date__to">
+										<DatePicker
+											name="date_to"
+											autoComplete="off"
+											required={true}
+											calendarClassName="orderform--calendar"
+											selected={this.state.startToDate}
+											selectsEnd
+											placeholderText="До (дд.мм.рррр)"
+											onChange={this.handleEndDate}
+											startDate={this.state.startFromDate}
+											endDate={this.state.startToDate}
+											minDate={this.state.startFromDate?addDays(this.state.startFromDate, 1):addDays(new Date(), 1)}
+											dateFormat="dd.MM.yyyy"
+											locale="uk"
+										/>
+									</div>
 								</div>
-								<div className="orderform--date__to">
-									<DatePicker
-										name="date_to"
-										autoComplete="off"
-										required={true}
-										calendarClassName="orderform--calendar"
-										selected={this.state.startToDate}
-										selectsEnd
-										placeholderText="До (дд.мм.рррр)"
-										onChange={this.handleEndDate}
-										startDate={this.state.startFromDate}
-										endDate={this.state.startToDate}
-										minDate={this.state.startFromDate?addDays(this.state.startFromDate, 1):addDays(new Date(), 1)}
-										dateFormat="dd.MM.yyyy"
-										locale="uk"
-									/>
+								<div className="orderform--button">
+									<input className="button button--full" type="submit" value="Замовити"/>
 								</div>
-							</div>
-							<div className="orderform--button">
-								<input className="button button--full" type="submit" value="Замовити"/>
-							</div>
-						</form>
+							</form>
+						</div>
+
 					</div>
 				</div>
 
@@ -309,7 +315,18 @@ class IndexPage extends React.Component {
 								<div className="services--content">
 									<div className="services--content__category">Послуги</div>
 									<h2 className="services--content__title">Монтаж кабеля в ґрунт</h2>
-									<div className="services--content__text">Lorem Ipsum - це текст-"риба", що використовується в друкарстві та дизайні. Lorem Ipsum є, фактично, стандартною "рибою" аж з XVI сторіччя, коли невідомий друкар взяв шрифтову гранку та склав на ній підбірку зразків шрифтів. "Риба" не тільки успішно пережила п'ять століть, але й прижилася в електронному верстуванні, залишаючись по суті незмінною. Вона популяризувалась в 60-их роках минулого сторіччя завдяки виданню зразків шрифтів Letraset, які містили уривки з Lorem Ipsum, і вдруге - нещодавно завдяки програмам комп'ютерного верстування на кшталт Aldus Pagemaker, які використовували різні версії Lorem Ipsum.</div>
+									<div className="services--content__text">
+										<p>Безтраншейна (без риття відкритих траншей) прокладка кабеля в ґрунт кабелеукладачем - найсучачніший метод монтажу кабеля в ґрунт.</p>
+										<p>Виконуємо роботи ножовим кабелеукладачем Ditch Witch RT90. Укладаємо кабель на глибину до 1 м.</p>
+										<p>Працюємо з оптичним та іншими видами кабелю.</p>
+										<p>Переваги безтраншейного методу прокладки кабелю:</p>
+										<ul>
+											<li>швидкість: до 2 км/день;</li>
+											<li>якість: економія людських ресурсів та збереження ландшафту;</li>
+											<li>надійність: при монтажу кабель менш схильний до пошкоджень;</li>
+											<li>рентабельність: зменшення вартості робіт.</li>
+										</ul>
+									</div>
 									<div className="services--content__info">
 										<div className="services--content__info-price">Ціна: <span>Договірна</span></div>
 										<div className="services--content__info-callback">
@@ -332,7 +349,18 @@ class IndexPage extends React.Component {
 								<div className="services--content">
 									<div className="services--content__category">Послуги</div>
 									<h2 className="services--content__title">Монтаж пластикової труби в ґрунт <span>(діаметр до 40 мм)</span></h2>
-									<div className="services--content__text">Lorem Ipsum - це текст-"риба", що використовується в друкарстві та дизайні. Lorem Ipsum є, фактично, стандартною "рибою" аж з XVI сторіччя, коли невідомий друкар взяв шрифтову гранку та склав на ній підбірку зразків шрифтів. "Риба" не тільки успішно пережила п'ять століть, але й прижилася в електронному верстуванні, залишаючись по суті незмінною. Вона популяризувалась в 60-их роках минулого сторіччя завдяки виданню зразків шрифтів Letraset, які містили уривки з Lorem Ipsum, і вдруге - нещодавно завдяки програмам комп'ютерного верстування на кшталт Aldus Pagemaker, які використовували різні версії Lorem Ipsum.</div>
+									<div className="services--content__text">
+										<p>Безтраншейна прокладка труб - це спосіб, який дозволяє монтувати трубопроводні комунікації без риття траншей. Завдяки цьому способу зберігається зовнішній вигляд ділянки, цілісність асфальтних доріг. Не потрібно знищувати дерева та кущі.</p>
+										<p>Виконуємо роботи кабелеукладачем Ditch Witch RT90.</p><p>Працюємо з пластиковими трубами до 40 мм та закопуємо до 1 м.</p>
+										<p>Переваги методу:</p>
+										<ul>
+											<li>висока швидкість виконання монтажу;</li>
+											<li>потребується менше матеріальних ресурсів на проведення робіт;</li>
+											<li>не потрібно додатково засипати траншеї;</li>
+											<li>безпечність робіт;</li>
+											<li>мінімальна кількість працівників.</li>
+										</ul>
+									</div>
 									<div className="services--content__info">
 										<div className="services--content__info-price">Ціна: <span>Договірна</span></div>
 										<div className="services--content__info-callback">
