@@ -10,7 +10,7 @@
     "cssnano": "^4.1.10",
     "gatsby": "^2.1.37",
     "gatsby-image": "^2.0.34",
-    "gatsby-plugin-google-analytics": "^2.0.17",
+    "gatsby-plugin-google-analytics": "^2.1.33",
     "gatsby-plugin-manifest": "^2.2.34",
     "gatsby-plugin-postcss": "^2.1.18",
     "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
