@@ -1,5 +1,7 @@
 import React from "react"
 
+import { IntlContextConsumer, changeLocale, FormattedMessage } from "gatsby-plugin-intl"
+
 import { graphql } from "gatsby"
 
 import { Link } from "react-scroll"
@@ -8,7 +10,7 @@ import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import { registerLocale } from  "react-datepicker";
 import { addDays } from 'date-fns';
-import {uk} from 'date-fns/esm/locale'
+import {uk, ru} from 'date-fns/esm/locale'
 import "react-datepicker/dist/react-datepicker.css";
 
 import { TelegramClient } from 'messaging-api-telegram';
@@ -22,18 +24,31 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 registerLocale('uk', uk);
+registerLocale('ru', ru);
 
-const options = [
-  { value: 'Монтаж кабеля в ґрунт', label: 'Монтаж кабеля в ґрунт' },
-  { value: 'Монтаж пластикової труби в ґрунт', label: 'Монтаж пластикової труби в ґрунт' },
-];
+const options = {
+	"uk" : [
+		{ value: 'Монтаж кабеля в ґрунт', label: 'Монтаж кабеля в ґрунт' },
+		{ value: 'Монтаж пластикової труби в ґрунт', label: 'Монтаж пластикової труби в ґрунт' },
+	],
+	"ru" : [
+		{ value: 'Монтаж кабеля в почву', label: 'Монтаж кабеля в почву' },
+		{ value: 'Монтаж пластиковой трубы в почву', label: 'Монтаж пластиковой трубы в почву' },
+	]
+};
 
 const client = TelegramClient.connect(process.env.API_KEY);
+
+const languageName = {
+	uk: "Українська",
+	ru: "Русский",
+}
 
 class IndexPage extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.openChangeLang = this.openChangeLang.bind(this);
 		this.handleName = this.handleName.bind(this);
 		this.handlePhone = this.handlePhone.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,7 +65,14 @@ class IndexPage extends React.Component {
 			startFromDate: null,
 			startToDate: null,
 			selectedOption: null,
+			dropdownState: false,
 		}
+	}
+
+	openChangeLang(e) {
+		this.setState(prevState => ({
+			dropdownState: !prevState.dropdownState
+		}));
 	}
 
 	handleStartDate = date => {
@@ -90,14 +112,15 @@ class IndexPage extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 
-		var messageText = "<b>Нове замовлення</b> \n===================\n", elements = e.target.elements;
+		const messageTextLang = this.props.pageContext.intl.messages;
+		var messageText = messageTextLang.messageTextTitle, elements = e.target.elements;
 
 		if(this.state.name && this.state.phone && this.state.selectedOption && this.state.startToDate && this.state.startFromDate) {
-			messageText += '<b>Ім\'я:</b> ' + this.state.name + ' \n';
-			messageText += '<b>Телефон:</b> ' + this.state.phone + ' \n';
-			messageText += '<b>Послуга:</b> ' + elements.service.value + ' \n';
-			messageText += '<b>Від:</b> ' + elements.date_from.value + ' \n';
-			messageText += '<b>До:</b> ' + elements.date_to.value
+			messageText += messageTextLang.messageTextName + this.state.name + ' \n';
+			messageText += messageTextLang.messageTextPhone + this.state.phone + ' \n';
+			messageText += messageTextLang.messageTextService + elements.service.value + ' \n';
+			messageText += messageTextLang.messageTextDateFrom + elements.date_from.value + ' \n';
+			messageText += messageTextLang.messageTextDateTo + elements.date_to.value
 
 			client.sendMessage(process.env.GROUP_ID, messageText, {
 				parse_mode: 'HTML',
@@ -113,8 +136,8 @@ class IndexPage extends React.Component {
 			});
 
 			store.addNotification({
-				title: "Успіх!",
-				message: "Дякуємо, що залишили заявку! Скоро наш менеджер зв'яжеться з Вами.",
+				title: messageTextLang.notifySuccessTitle,
+				message: messageTextLang.notifySuccessText,
 				type: "success",
 				container: "top-center",
 				animationIn: ["animated", "fadeIn"],
@@ -126,8 +149,8 @@ class IndexPage extends React.Component {
 			});
 		} else {
 			store.addNotification({
-				title: "Помилка!",
-				message: "Заповніть, будь ласка, усі поля!",
+				title: messageTextLang.notifyErrorTitle,
+				message: messageTextLang.notifyErrorText,
 				type: "danger",
 				container: "top-center",
 				animationIn: ["animated", "fadeIn"],
@@ -141,6 +164,8 @@ class IndexPage extends React.Component {
 	}
 
 	openPhoneCallback() {
+
+		const placeholdersLang = this.props.pageContext.intl.messages;
 		store.addNotification({
 			id: "phoneCall",
 			width: 300,
@@ -150,13 +175,13 @@ class IndexPage extends React.Component {
 					<button type="button" className="callback--close" onClick={() => {store.removeNotification("phoneCall")}}></button>
 					<form className="callback--form" onSubmit={this.handleCallbackSubmit}>
 						<div className="callback--row">
-							<input type="text" name="name" placeholder="Введіть ваше ім'я" onChange={this.handleCallbackName} value={this.state.callname} required />
+							<input type="text" name="name" placeholder={placeholdersLang.phoneCallName} onChange={this.handleCallbackName} value={this.state.callname} required />
 						</div>
 						<div className="callback--row">
-							<input type="tel" name="phone" pattern="^[0-9-+\s()]*$" placeholder="Введіть ваш телефон" onChange={this.handleCallbackPhone} value={this.state.callphone} required />
+							<input type="tel" name="phone" pattern="^[0-9-+\s()]*$" placeholder={placeholdersLang.phoneCallPhone} onChange={this.handleCallbackPhone} value={this.state.callphone} required />
 						</div>
 						<div className="callback--row">
-							<input className="button button--full" type="submit" value="Замовити"/>
+							<input className="button button--full" type="submit" value={placeholdersLang.phoneCallSubmit} />
 						</div>
 					</form>
 				</div>
@@ -175,9 +200,11 @@ class IndexPage extends React.Component {
 		e.preventDefault();
 		store.removeNotification("phoneCall");
 
-		var messageText = "<b>Замовлення на дзвінок</b> \n==================================\n";
-		messageText += '<b>Ім\'я:</b> ' + this.state.callname + ' \n';
-		messageText += '<b>Телефон:</b> ' + this.state.callphone;
+		const messageTextLang = this.props.pageContext.intl.messages;
+
+		var messageText = messageTextLang.messageTextTitle2;
+		messageText += messageTextLang.messageTextName + this.state.callname + ' \n';
+		messageText += messageTextLang.messageTextPhone + this.state.callphone;
 
 		client.sendMessage(process.env.GROUP_ID, messageText, {
 			parse_mode: 'HTML',
@@ -190,8 +217,8 @@ class IndexPage extends React.Component {
 		});
 
 		store.addNotification({
-			title: "Успіх!",
-			message: "Дякуємо, що залишили заявку! Скоро наш менеджер зв'яжеться з Вами.",
+			title: messageTextLang.notifySuccessTitle,
+			message: messageTextLang.notifySuccessText,
 			type: "success",
 			container: "top-center",
 			animationIn: ["animated", "fadeIn"],
@@ -206,10 +233,11 @@ class IndexPage extends React.Component {
 	render() {
 
 		const info = this.props.data;
+		const intl = this.props.pageContext.intl;
 
 		return (
 		  <Layout>
-			<SEO title="KTZ Company | Безтраншейна прокладка кабеля в ґрунт та монтаж труб кабелеукладачем" description="До кожного нового об'єкта ми підходимо індивідуально, що дозволяє нам виконати роботи по безтраншейній прокладці кабеля в ґрунт у встановлені терміни та з високою надійністю." />
+			<SEO lang={intl.language} title={intl.messages.title} description={intl.messages.description} />
 
 			<header className="header">
 				<div className="container">
@@ -221,10 +249,26 @@ class IndexPage extends React.Component {
 								<span /><span /><span />
 							</label>
 							<ul>
-								<li><Link activeClass="active" to="services" spy={true} smooth={true} duration={500} >Послуги</Link></li>
-								<li><Link activeClass="active" to="aboutus" spy={true} smooth={true} duration={500} >Про нас</Link></li>
-								<li><Link activeClass="active" to="contacts" spy={true} smooth={true} duration={500} >Контакти</Link></li>
-								<li><button className="button button--full" onClick={() => {this.openPhoneCallback()}}>Замовити дзвінок</button></li>
+								<li><Link activeClass="active" to="services" spy={true} smooth={true} duration={500} ><FormattedMessage id="service" /></Link></li>
+								<li><Link activeClass="active" to="aboutus" spy={true} smooth={true} duration={500} ><FormattedMessage id="aboutus" /></Link></li>
+								<li><Link activeClass="active" to="contacts" spy={true} smooth={true} duration={500} ><FormattedMessage id="contacts" /></Link></li>
+								<li>
+									<button className={`lang--button lang--button__` + intl.language + (this.state.dropdownState?` open`:``)} onClick={() => this.openChangeLang()} title={languageName[intl.language]}><span className="flag"/></button>
+									<ul className={`lang--dropdown ` + (this.state.dropdownState?`open`:``)}>
+										<IntlContextConsumer>
+											{({ languages, language: currentLocale }) => 
+											  languages.map(language => (
+											    <li key={language} className={`lang--li` + (currentLocale === language ? ` selected` : ``)}>
+											    	<button onClick={() => changeLocale(language)} className={`lang--button lang--button__` + language + (currentLocale === language ? ` selected` : ``)} title={languageName[language]}>
+											    		<span className="flag"/>
+											    	</button>
+											    </li>
+											  ))
+											}
+										</IntlContextConsumer>
+									</ul>
+								</li>
+								<li><button className="button button--full" onClick={() => {this.openPhoneCallback()}}><FormattedMessage id="getCall" /></button></li>
 							</ul>
 						</div>
 					</div>
@@ -235,27 +279,27 @@ class IndexPage extends React.Component {
 				<div id="first" className="first-screen">
 					<div className="container">
 						<div className="col-sm-6">
-							<h1>Безтраншейна прокладка кабеля в ґрунт та монтаж пластикових труб кабелеукладачем Ditch&nbsp;Witch RT90. <span>Швидко! Якісно! Надійно!</span></h1>
+							<h1><FormattedMessage id="h1" /> <span><FormattedMessage id="h1Span" /></span></h1>
 						</div>
 						<div className="col-sm-6">
 							<form className="orderform" onSubmit={this.handleSubmit}>
-								<h3 className="orderform--title">Замовити онлайн</h3>
+								<h3 className="orderform--title"><FormattedMessage id="orderformTitle" /></h3>
 								<div className="orderform--name">
-									<input type="text" name="name" placeholder="Введіть ваше ім'я" onChange={this.handleName} value={this.state.name} required />
+									<input type="text" name="name" placeholder={intl.messages.orderformName} onChange={this.handleName} value={this.state.name} required />
 								</div>
 								<div className="orderform--phone">
-									<input type="tel" name="phone" pattern="^[0-9-+\s()]*$" placeholder="Введіть ваш телефон" onChange={this.handlePhone} value={this.state.phone} required />
+									<input type="tel" name="phone" pattern="^[0-9-+\s()]*$" placeholder={intl.messages.orderformPhone} onChange={this.handlePhone} value={this.state.phone} required />
 								</div>
 								<div className="orderform--select">
 									<Select
 										name="service"
 										required={true}
-										placeholder="Оберіть послугу"
+										placeholder={intl.messages.orderformService}
 										clearable={false}
 										searchable={false}
 										value={this.state.selectedOption}
 										onChange={this.handleSelectChange}
-										options={options}
+										options={options[intl.language]}
 									/>
 								</div>
 								<div className="orderform--date">
@@ -267,14 +311,14 @@ class IndexPage extends React.Component {
 											calendarClassName="orderform--calendar"
 											selected={this.state.startFromDate}
 											selectsStart
-											placeholderText="Від (дд.мм.рррр)"
+											placeholderText={intl.messages.orderformDateFrom}
 											onChange={this.handleStartDate}
 											startDate={this.state.startFromDate}
 											endDate={this.state.startToDate}
 											minDate={new Date()}
 											maxDate={this.state.startToDate?this.state.startToDate:null}
 											dateFormat="dd.MM.yyyy"
-											locale="uk"
+											locale={intl.language}
 										/>
 
 									</div>
@@ -286,18 +330,18 @@ class IndexPage extends React.Component {
 											calendarClassName="orderform--calendar"
 											selected={this.state.startToDate}
 											selectsEnd
-											placeholderText="До (дд.мм.рррр)"
+											placeholderText={intl.messages.orderformDateTo}
 											onChange={this.handleEndDate}
 											startDate={this.state.startFromDate}
 											endDate={this.state.startToDate}
 											minDate={this.state.startFromDate?addDays(this.state.startFromDate, 1):addDays(new Date(), 1)}
 											dateFormat="dd.MM.yyyy"
-											locale="uk"
+											locale={intl.language}
 										/>
 									</div>
 								</div>
 								<div className="orderform--button">
-									<input className="button button--full" type="submit" value="Замовити"/>
+									<input className="button button--full" type="submit" value={intl.messages.phoneCallSubmit} />
 								</div>
 							</form>
 						</div>
@@ -313,24 +357,13 @@ class IndexPage extends React.Component {
 							</div>
 							<div className="services--1-left">
 								<div className="services--content">
-									<div className="services--content__category">Послуги</div>
-									<h2 className="services--content__title">Монтаж кабеля в ґрунт</h2>
-									<div className="services--content__text">
-										<p>Безтраншейна (без риття відкритих траншей) прокладка кабеля в ґрунт кабелеукладачем - найсучачніший метод монтажу кабеля в ґрунт.</p>
-										<p>Виконуємо роботи ножовим кабелеукладачем Ditch Witch RT90. Укладаємо кабель на глибину до 1 м.</p>
-										<p>Працюємо з оптичним та іншими видами кабелю.</p>
-										<p>Переваги безтраншейного методу прокладки кабелю:</p>
-										<ul>
-											<li>швидкість: до 2 км/день;</li>
-											<li>якість: економія людських ресурсів та збереження ландшафту;</li>
-											<li>надійність: при монтажу кабель менш схильний до пошкоджень;</li>
-											<li>рентабельність: зменшення вартості робіт.</li>
-										</ul>
-									</div>
+									<div className="services--content__category"><FormattedMessage id="service" /></div>
+									<h2 className="services--content__title"><FormattedMessage id="servicesName1" /></h2>
+									<div className="services--content__text" dangerouslySetInnerHTML={{ __html: intl.messages.servicesBody1}} />
 									<div className="services--content__info">
-										<div className="services--content__info-price">Ціна: <span>Договірна</span></div>
+										<div className="services--content__info-price"><FormattedMessage id="servicesPriceName" /> <span><FormattedMessage id="servicesPriceValue" /></span></div>
 										<div className="services--content__info-callback">
-											<button className="button button--full" onClick={() => {this.openPhoneCallback()}}>Замовити дзвінок</button>
+											<button className="button button--full" onClick={() => {this.openPhoneCallback()}}><FormattedMessage id="getCall" /></button>
 										</div>
 									</div>
 								</div>
@@ -347,24 +380,13 @@ class IndexPage extends React.Component {
 							</div>
 							<div className="services--2-right">
 								<div className="services--content">
-									<div className="services--content__category">Послуги</div>
-									<h2 className="services--content__title">Монтаж пластикової труби в ґрунт <span>(діаметр до 40 мм)</span></h2>
-									<div className="services--content__text">
-										<p>Безтраншейна прокладка труб - це спосіб, який дозволяє монтувати трубопроводні комунікації без риття траншей. Завдяки цьому способу зберігається зовнішній вигляд ділянки, цілісність асфальтних доріг. Не потрібно знищувати дерева та кущі.</p>
-										<p>Виконуємо роботи кабелеукладачем Ditch Witch RT90.</p><p>Працюємо з пластиковими трубами до 40 мм та закопуємо до 1 м.</p>
-										<p>Переваги методу:</p>
-										<ul>
-											<li>висока швидкість виконання монтажу;</li>
-											<li>потребується менше матеріальних ресурсів на проведення робіт;</li>
-											<li>не потрібно додатково засипати траншеї;</li>
-											<li>безпечність робіт;</li>
-											<li>мінімальна кількість працівників.</li>
-										</ul>
-									</div>
+									<div className="services--content__category"><FormattedMessage id="service" /></div>
+									<h2 className="services--content__title"><FormattedMessage id="servicesName2" /> <span><FormattedMessage id="servicesNameSub2" /></span></h2>
+									<div className="services--content__text" dangerouslySetInnerHTML={{ __html: intl.messages.servicesBody2}} />
 									<div className="services--content__info">
-										<div className="services--content__info-price">Ціна: <span>Договірна</span></div>
+										<div className="services--content__info-price"><FormattedMessage id="servicesPriceName" /> <span><FormattedMessage id="servicesPriceValue" /></span></div>
 										<div className="services--content__info-callback">
-											<button className="button button--full" onClick={() => {this.openPhoneCallback()}}>Замовити дзвінок</button>
+											<button className="button button--full" onClick={() => {this.openPhoneCallback()}}><FormattedMessage id="getCall" /></button>
 										</div>
 									</div>
 								</div>
@@ -375,18 +397,13 @@ class IndexPage extends React.Component {
 
 				<div id="aboutus" className="aboutus">
 					<div className="container">
-						<div className="aboutus--title" data-backtitle="Про нас">Про нас</div>
+						<div className="aboutus--title" data-backtitle={intl.messages.aboutus}><FormattedMessage id="aboutus" /></div>
 						<div className="aboutus--container">
 							<div className="aboutus--left">
 								<div className="aboutus--img"></div>
 							</div>
 							<div className="aboutus--right">
-								<div className="aboutus--text">
-									<p>KTZ заснована в 2018 р. у м. Рівне і виконує роботи по безтраншейному монтажу кабеля та труб діаметром до 40 мм в ґрунт. На сьогодні нашою компанією було прокладено понад 400 км кабелю. Ми працювали у важких геологічних умовах, у безводних ґрунтах, у міській смузі. Виконували  проколи різного типу складності під трасами.</p>
-									<p>До кожного нового об'єкта ми підходимо індивідуально, що дозволяє нам виконати роботи по безтраншейній прокладці кабеля в ґрунт у встановлені терміни та з високою надійністю.</p>
-									<p>Завдяки наявності власної техніки та навчених працівників KTZ, виконуємо роботу професійно і якісно.</p>
-									<p>Роботи виконуємо по всій території України.</p>
-								</div>
+								<div className="aboutus--text" dangerouslySetInnerHTML={{ __html: intl.messages.aboutusBody}} />
 								<div className="aboutus--signature">Колектив KTZ Company</div>
 							</div>
 						</div>

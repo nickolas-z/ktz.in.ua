@@ -53,7 +53,7 @@
 			}
 		}
 
-		ul {
+		ul:not(.lang--dropdown) {
 			list-style: none;
 			padding: 0;
 			margin: 0;
@@ -74,7 +74,8 @@
 
 			}
 
-			li {
+			> li {
+				position: relative;
 				@media(max-width: 767px) {
 					border-top: 1px solid rgba($color1, .1);
 					&:nth-last-child {
@@ -105,6 +106,85 @@
 			}
 			&:hover, &:focus {
 				background-color: $color4;
+			}
+		}
+	}
+}
+
+.lang {
+	&--button {
+		background-color: transparent;
+		border: 0;
+		@include size(50px, 38px);
+		padding: 0 6px;
+		vertical-align: top;
+		transition: background-color .3s ease;
+
+		@media(max-width: 767px) {
+			display: none;
+		}
+
+		&.open {
+			background-color: rgba($color1,.1);
+		}
+
+		&:hover, &:focus {
+			background-color: rgba($color1,.2);
+		}
+		.flag {
+			display: inline-block;
+			@include size(100%);
+			cursor: pointer;
+			background-size: 35px 22px;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+		&__uk {
+			.flag {
+				background-image: url(../images/flags/uk.svg);
+			}
+		}
+		&__ru {
+			.flag {
+				background-image: url(../images/flags/ru.svg);
+			}
+		}
+	}
+	&--dropdown {
+		list-style: none;
+		margin: 8px 0;
+		padding: 0;
+	
+		@media(min-width: 768px) {
+			display: none;
+			margin: 0;
+			@include position(absolute, 100% null null 0);
+		}
+		&.open {
+			display: block;
+		}
+		.lang--button {
+			background-color: rgba($color1,.1);
+			&:hover, &:focus, &.selected {
+				background-color: rgba($color1,.2);
+			}
+			@media(max-width: 767px) {
+				display: inline-block;
+				background-color: transparent;
+				&:hover, &:focus, &.selected {
+					background-color: rgba($color1,.2);
+				}
+			}
+		}
+	}
+	&--li {
+		@media(max-width: 767px) {
+			display: inline-block;
+		}
+		&.selected {
+			display: none;
+			@media(max-width: 767px) {
+				display: inline-block;
 			}
 		}
 	}

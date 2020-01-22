@@ -20,6 +20,15 @@ module.exports = {
     },
     `gatsby-plugin-sitemap`,
     {
+      resolve: `gatsby-plugin-intl`,
+      options: {
+        path: `${__dirname}/src/intl`,
+        languages: [`uk`, `ru`],
+        defaultLanguage: `uk`,
+        redirect: true,
+      },
+    },
+    {
       resolve: `gatsby-plugin-sass`,
       options: {
         postCssPlugins: [
