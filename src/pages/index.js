@@ -415,7 +415,10 @@ class IndexPage extends React.Component {
 				<div className="footer--contacts">
 				  <div className="container">
 					<div className="footer--container">
-					  <Link to="first" className="static" spy={true} smooth={true} duration={500}><img src={logo} alt={info.site.siteMetadata.title} /></Link>
+					  <div className="footer--logo">
+					  	<Link to="first" className="static" spy={true} smooth={true} duration={500}><img src={logo} alt={info.site.siteMetadata.title} /></Link>
+					  </div>
+					  <a href="mailto:ktz.in.ua@gmail.com" className="footer--mail">ktz.in.ua@gmail.com</a>
 					  <a href="tel:+380973295976" className="footer--phone">+380 97 329 5976</a>
 					</div>
 				  </div>
