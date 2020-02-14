@@ -66,6 +66,7 @@ class IndexPage extends React.Component {
 			startToDate: null,
 			selectedOption: null,
 			dropdownState: false,
+			disabledButton: false,
 		}
 	}
 
@@ -165,14 +166,18 @@ class IndexPage extends React.Component {
 
 	openPhoneCallback() {
 
+		var self = this;
 		const placeholdersLang = this.props.pageContext.intl.messages;
+
+		self.setState({ disabledButton: true });
+
 		store.addNotification({
 			id: "phoneCall",
 			width: 300,
 			container: "bottom-center",
 			content: () => (
 				<div className="callback--container">
-					<button type="button" className="callback--close" onClick={() => {store.removeNotification("phoneCall")}}></button>
+					<button type="button" className="callback--close" onClick={() => {store.removeNotification("phoneCall"); self.setState({ disabledButton: false }) }}></button>
 					<form className="callback--form" onSubmit={this.handleCallbackSubmit}>
 						<div className="callback--row">
 							<input type="text" name="name" placeholder={placeholdersLang.phoneCallName} onChange={this.handleCallbackName} value={this.state.callname} required />
@@ -214,6 +219,7 @@ class IndexPage extends React.Component {
 		this.setState({
 			callname: '',
 			callphone: '',
+			disabledButton: false,
 		});
 
 		store.addNotification({
@@ -268,7 +274,7 @@ class IndexPage extends React.Component {
 										</IntlContextConsumer>
 									</ul>
 								</li>
-								<li><button className="button button--full" onClick={() => {this.openPhoneCallback()}}><FormattedMessage id="getCall" /></button></li>
+								<li><button className="button button--full" onClick={() => {this.openPhoneCallback()}} disabled={this.state.disabledButton}><FormattedMessage id="getCall" /></button></li>
 							</ul>
 						</div>
 					</div>
@@ -341,7 +347,7 @@ class IndexPage extends React.Component {
 									</div>
 								</div>
 								<div className="orderform--button">
-									<input className="button button--full" type="submit" value={intl.messages.phoneCallSubmit} />
+									<input className="button button--full" type="submit" value={intl.messages.phoneCallSubmit} disabled={this.state.disabledButton} />
 								</div>
 							</form>
 						</div>
@@ -363,7 +369,7 @@ class IndexPage extends React.Component {
 									<div className="services--content__info">
 										<div className="services--content__info-price"><FormattedMessage id="servicesPriceName" /> <span><FormattedMessage id="servicesPriceValue" /></span></div>
 										<div className="services--content__info-callback">
-											<button className="button button--full" onClick={() => {this.openPhoneCallback()}}><FormattedMessage id="getCall" /></button>
+											<button className="button button--full" onClick={() => {this.openPhoneCallback()}} disabled={this.state.disabledButton}><FormattedMessage id="getCall" disabled={this.state.disabledButton} /></button>
 										</div>
 									</div>
 								</div>
@@ -386,7 +392,7 @@ class IndexPage extends React.Component {
 									<div className="services--content__info">
 										<div className="services--content__info-price"><FormattedMessage id="servicesPriceName" /> <span><FormattedMessage id="servicesPriceValue" /></span></div>
 										<div className="services--content__info-callback">
-											<button className="button button--full" onClick={() => {this.openPhoneCallback()}}><FormattedMessage id="getCall" /></button>
+											<button className="button button--full" onClick={() => {this.openPhoneCallback()}} disabled={this.state.disabledButton}><FormattedMessage id="getCall" /></button>
 										</div>
 									</div>
 								</div>

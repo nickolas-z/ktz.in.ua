@@ -78,7 +78,8 @@ input, textarea {
 		opacity: 1;
 	}
 	&[disabled] {
-		background-color: $input--background-disabled;
+		opacity: .7;
+		pointer-events: none;
 	}
 }
 
@@ -130,6 +131,10 @@ input, textarea {
 
 	i {
 		margin-left: 7px;
+	}
+	&[disabled] {
+		opacity: .7;
+		pointer-events: none;
 	}
 }
 

@@ -107,6 +107,10 @@
 			&:hover, &:focus {
 				background-color: $color4;
 			}
+			&[disabled] {
+				opacity: .7;
+				pointer-events: none;
+			}
 		}
 	}
 }
