@@ -23,7 +23,7 @@
     "gatsby-source-filesystem": "^2.0.27",
     "gatsby-transformer-sharp": "^2.1.17",
     "messaging-api-telegram": "^0.8.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-datepicker": "^2.10.1",
